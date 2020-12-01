@@ -12,12 +12,14 @@ defmodule Duper.Application do
       Duper.Results,
       # tuple so we can pass in the root of the tree to be searched as a parameter
       # "." is current working directory
-      {Duper.PathFinder, "."}
+      {Duper.PathFinder, "."},
+      Duper.WorkerSupervisor,
+      {Duper.Gatherer, 1}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Duper.Supervisor]
+    opts = [strategy: :one_for_all, name: Duper.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end
